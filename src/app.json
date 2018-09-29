@@ -1,0 +1,11 @@
+{
+  "pages": [
+    "pages/index/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarTitleText": "医美库存管理",
+    "navigationBarBackgroundColor": "#19a9b5",
+    "navigationBarTextStyle": "dark"
+  }
+}
