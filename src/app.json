@@ -1,7 +1,8 @@
 {
   "cloud": true,
   "pages": [
-    "pages/index/main"
+    "pages/index/main",
+    "pages/manage/main"
   ],
   "window": {
     "backgroundTextStyle": "dark",

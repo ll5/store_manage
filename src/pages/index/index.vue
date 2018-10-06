@@ -6,6 +6,9 @@
         {{item.name}}
       </div>
     </div>
+
+    <!--悬浮按钮-->
+    <div class="floatButton" @click="gotoSetting">设置</div>
   </div>
 </template>
 
@@ -20,21 +23,14 @@
       }
     },
     methods: {
+      // 去设置页面
+      gotoSetting () {
+        wx.navigateTo({url: '/pages/manage/main'})
+      },
+      // 获取分类列表
       getCategoryList () {
         category.get().then(res => {
           this.categoryList = res.data
-        })
-      },
-      addCategory () {
-        category.add({
-          data: {
-            name: '其他',
-            enName: 'other'
-          }
-        }).then(res => {
-          console.log(res)
-        }).catch(err => {
-          console.log(err)
         })
       }
     },
@@ -69,5 +65,21 @@
   }
   .tabItem:not(:last-child){
     border-right: 1px solid #e5e5e5;
+  }
+  .floatButton {
+    position: fixed;
+    top: 50rpx;
+    right: 20rpx;
+    width: 75rpx;
+    height: 75rpx;
+    border-radius: 50%;
+    background: #000;
+    border: 1px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #fff;
+    opacity: 0.5;
   }
 </style>

@@ -6,14 +6,14 @@ cloud.init({
 
 // 创建数据库链接
 const db = wx.cloud.database()
-// const category = db.collection('category')
+// const manage = db.collection('manage')
 
 // 云函数入口函数
 exports.main = async (event, context) => {
   db.collection('category').add({
     data:{
       name: '分类名称',
-      enName: 'category name'
+      enName: 'manage name'
     },
     success (res) {
       return res
