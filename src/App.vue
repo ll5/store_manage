@@ -4,7 +4,7 @@ export default {
   methods: {
   },
   created () {
-    wx.cloud.init()
+    // wx.cloud.init()
   },
   onLaunch () {
     wx.cloud.init({
