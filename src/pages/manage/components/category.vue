@@ -10,7 +10,7 @@
     <!--新增按钮-->
     <div class="addButton" @click="openEditCategory">新增</div>
     <!--新增弹窗-->
-    <categoryEdit v-if="showDialog" :data="currentCategory" @close="closeEditCategory" />
+    <categoryEdit v-if="showDialog" :category="currentCategory" @close="closeEditCategory" />
   </div>
 </template>
 
@@ -31,7 +31,7 @@
     methods: {
       // 获取分类列表
       getCategoryList () {
-        category.get().then(res => {
+        category.orderBy('order', 'desc').limit(9999).get().then(res => {
           this.categoryList = res.data
         })
       },

@@ -23,7 +23,7 @@
     components: {procudt, category},
     data () {
       return {
-        currentTab: 2
+        currentTab: 1
       }
     },
     methods: {

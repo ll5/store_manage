@@ -29,7 +29,7 @@
       },
       // 获取分类列表
       getCategoryList () {
-        category.get().then(res => {
+        category.limit(9999).get().then(res => {
           this.categoryList = res.data
         })
       }

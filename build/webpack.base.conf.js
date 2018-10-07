@@ -112,6 +112,13 @@ module.exports = {
     }], {
       context: 'src/'
     }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../src/images'),
+        to: path.resolve(__dirname, '../dist/images'),
+        ignore: ['.*']
+      }
+    ])
     // new CopyWebpackPlugin([
     //   {
     //     from: path.resolve(__dirname, '../cloud'),

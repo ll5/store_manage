@@ -2,14 +2,10 @@
   <div class="wrap">
      <div class="content">
        <div class="textWrap">
-         名称：<input class="text" v-model="category.name" />
-       </div>
-       <div class="textWrap">
-         排序：<input class="text" v-model="category.order" />
+         进货数量：<input class="text" v-model="num" /> {{product.unit}}
        </div>
        <div class="closeButton" @click="closeDialog">×</div>
-       <div class="saveButton" @click="saveCategory" v-if="category._id">保存</div>
-       <div class="saveButton" @click="addCategory" v-else >保存</div>
+       <div class="saveButton" @click="storeAdd">录入</div>
      </div>
   </div>
 </template>
@@ -17,14 +13,15 @@
 <script>
   // 创建数据库链接
   const db = wx.cloud.database()
-  const category = db.collection('category')
+  const product = db.collection('product')
   export default {
     data () {
       return {
+        num: ''
       }
     },
     props: {
-      category: {
+      product: {
         type: Object,
         default: () => {}
       }
@@ -36,28 +33,15 @@
       closeDialog () {
         this.$emit('close')
       },
-      // 保存编辑数据
-      saveCategory () {
-        category.doc(this.category._id).update({
+      // 库存录入
+      storeAdd () {
+        const _ = db.command
+        product.doc(this.product._id).update({
           data: {
-            name: this.category.name,
-            order: +this.category.order
+            store: _.inc(+this.num)
           }
-        }).then(() => {
-          wx.showToast({title: '修改成功！'})
-          this.$emit('close', true)
-        })
-      },
-      // 新增分类
-      addCategory () {
-        // let that = this
-        category.add({
-          data: {
-            name: this.category.name,
-            order: +this.category.order
-          }
-        }).then(() => {
-          wx.showToast({title: '新增成功！'})
+        }).then((res) => {
+          wx.showToast({title: '录入成功！'})
           this.$emit('close', true)
         })
       }
@@ -86,7 +70,7 @@
     margin-bottom: 25vh;
   }
   .text {
-    width: 500rpx;
+    width: 400rpx;
     height: 100rpx;
     margin: 20rpx 0;
     /*border: 1px solid #37B3FF;*/
@@ -99,6 +83,7 @@
     justify-content: space-between;
     align-items: center;
     margin: 20rpx 0;
+    font-size: 16px;
   }
   .closeButton {
     width: 50rpx;
