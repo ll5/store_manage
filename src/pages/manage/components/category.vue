@@ -1,10 +1,11 @@
 <template>
   <div class="wrap">
     <div class="item" v-for="item in categoryList" :key="item._id">
-      {{item.name}}
+      <div class="itemName">{{item.name}}</div>
+      <div class="itemOrder">{{item.order}}</div>
       <div class="buttonWrap">
-        <div class="blue" @click="openEditCategory(item)">编辑</div>
-        <div class="red" @click="deleteCategory(item._id)">删除</div>
+        <image class="icon" src="/images/edit.svg" @click="openEditCategory(item)"></image>
+        <image class="icon" src="/images/delete.svg" @click="deleteCategory(item._id)"></image>
       </div>
     </div>
     <!--新增按钮-->
@@ -68,10 +69,25 @@
           success (res) {
             if (res.confirm) {
               category.doc(id).remove().then(res => {
-                wx.showToast({title: '删除成功'})
-                that.getCategoryList()
+                that.deleteProducts(id)
               })
             }
+          }
+        })
+      },
+      // 删除分类下的对应产品
+      deleteProducts (id) {
+        let that = this
+        wx.cloud.callFunction({
+          // 云函数名称
+          name: 'RemoveProducts',
+          // 传给云函数的参数
+          data: {
+            catId: id
+          },
+          success () {
+            wx.showToast({title: '删除成功！'})
+            that.getCategoryList()
           }
         })
       }
@@ -99,14 +115,26 @@
     justify-content: space-between;
     align-items: center;
   }
+  .itemName{
+    width: 500rpx;
+  }
+  .itemOrder{
+    width: 130rpx;
+    color: #999;
+    font-size: 14px;
+  }
   .buttonWrap {
     font-size: 14px;
     display: flex;
     justify-content: space-between;
-    width: 60px;
+    width: 80rpx;
   }
   .item:not(:last-child) {
     border-bottom: 1px solid #e5e5e5;
+  }
+  .icon{
+    width: 30rpx;
+    height: 30rpx;
   }
   .addButton {
     width: 710rpx;

@@ -1,8 +1,15 @@
 <template>
   <div class="wrap">
-    我是首页
+    <div v-for="item in productList" :key="item._id">
+      <productItem :product="item" />
+    </div>
+    <!--底部 tab 栏-->
     <div class="tab" @click="addCategory">
-      <div class="tabItem" v-for="item in categoryList" :key="item._id">
+      <div class="tabItem"
+           :class="{tabItemActivity: currentCategoryId === item._id}"
+           v-for="item in categoryList"
+           :key="item._id"
+           @click="switchTab(item._id)">
         {{item.name}}
       </div>
     </div>
@@ -13,13 +20,18 @@
 </template>
 
 <script>
+  import productItem from './components/productItem'
   // 创建数据库链接
   const db = wx.cloud.database()
   const category = db.collection('category')
+  const product = db.collection('product')
   export default {
+    components: {productItem},
     data () {
       return {
-        categoryList: []
+        currentCategoryId: '',
+        categoryList: [],
+        productList: []
       }
     },
     methods: {
@@ -27,10 +39,24 @@
       gotoSetting () {
         wx.navigateTo({url: '/pages/manage/main'})
       },
+      switchTab (id) {
+        if (this.currentCategoryId === id) return
+        this.productList = []
+        this.currentCategoryId = id
+        this.getProductList()
+      },
       // 获取分类列表
       getCategoryList () {
         category.limit(9999).get().then(res => {
           this.categoryList = res.data
+          this.currentCategoryId = res.data[0]._id
+          this.getProductList()
+        })
+      },
+      // 获取产品列表
+      getProductList () {
+        product.limit(9999).where({categoryId: this.currentCategoryId}).get().then(res => {
+          this.productList = res.data
         })
       }
     },
@@ -43,37 +69,42 @@
   .wrap {
     width: 100%;
     height: calc(100vh - 100rpx);
-    background: red;
+    background: #f5f5f5;
+    overflow-y: scroll;
   }
 
   .tab {
     width: 100%;
     height: 100rpx;
-    background: green;
     position: fixed;
     left: 0;
     bottom: 0;
     display: flex;
+    border-top: 1px solid #e5e5e5
   }
   .tabItem {
     padding: 0 10rpx;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    flex-grow: 1;
     flex-shrink: 1;
+    font-size: 14px;
   }
   .tabItem:not(:last-child){
     border-right: 1px solid #e5e5e5;
   }
+  .tabItemActivity {
+    color: #37B3FF;
+  }
   .floatButton {
     position: fixed;
-    top: 50rpx;
-    right: 20rpx;
+    bottom: 10vh;
+    right: 5vw;
     width: 75rpx;
     height: 75rpx;
-    border-radius: 50%;
     background: #000;
+    border-radius: 50%;
     border: 1px solid #fff;
     display: flex;
     justify-content: center;

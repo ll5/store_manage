@@ -6,7 +6,7 @@
         <div class="itemName"> {{item.name}}</div>
         <div class="itemStore"> {{item.store}} <span class="f14">{{item.unit}}</span></div>
         <div class="buttonWrap">
-          <image class="icon" src="/images/edit-grey.svg" @click="openEditProduct(item)"></image>
+          <image class="icon" src="/images/edit.svg" @click="openEditProduct(item)"></image>
           <image class="icon" src="/images/store.svg" @click="openStoreAdd(item)"></image>
         </div>
       </div>
@@ -146,12 +146,12 @@
   .buttonWrap {
     font-size: 14px;
     display: flex;
-    justify-content: space-around;
-    width: 80px;
+    justify-content: space-between;
+    width: 80rpx;
   }
   .icon{
-    width: 40rpx;
-    height: 40rpx;
+    width: 30rpx;
+    height: 30rpx;
   }
   .addButton {
     position: fixed;
