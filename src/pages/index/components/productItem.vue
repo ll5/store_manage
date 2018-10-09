@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <div class="name">{{product.name}}</div>
-    <div class="store">{{product.store}}</div>
+    <div class="store">{{product.store}}<span class="unit">{{product.unit}}</span></div>
     <div class="button" @click="distroyStore(product._id)">售出</div>
   </div>
 </template>
@@ -49,14 +49,18 @@
     padding: 0 20rpx;
   }
   .name {
-    width: 500rpx;
+    width: 450rpx;
   }
   .store{
-    width: 100rpx;
-    color: #999;
+    width: 160rpx;
+    color: #666;
+  }
+  .unit{
+    font-size: 14px;
+    color:#999;
   }
   .button {
-    width: 110rpx;
+    width: 100rpx;
     height: 60rpx;
     border-radius: 8rpx;
     border: 1px solid #37B3FF;

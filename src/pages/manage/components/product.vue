@@ -13,9 +13,12 @@
     </div>
     <!--新增按钮-->
     <div class="addButton" @click="openEditProduct">新增</div>
+    <!--报价按钮-->
+    <!--<div class="offerButton" @click="wx.redirectTo({url: ''})">查看报价</div>-->
+    <navigator url="/pages/offer/main" class="offerButton" hover-class="navigator-hover">查看报价</navigator>
     <!--新增弹窗-->
     <productEdit v-if="showDialog" :product="currentProduct" :categorys="categoryList" @close="closeEditProduct" />
-    <!--新增弹窗-->
+    <!--进货弹窗-->
     <storeAdd v-if="showStoreAddDialog" :product="currentProduct" @close="closeStoreAdd" />
   </div>
 </template>
@@ -58,6 +61,7 @@
       getCategoryList () {
         category.orderBy('order', 'desc').limit(9999).get().then(res => {
           this.categoryList = res.data
+          this.getProductList()
         })
       },
       // 关闭 编辑 对话框
@@ -99,9 +103,8 @@
         })
       }
     },
-    async onLoad () {
-      await this.getCategoryList()
-      this.getProductList()
+    onLoad () {
+      this.getCategoryList()
     }
   }
 </script>
@@ -166,5 +169,17 @@
     justify-content: center;
     align-items: center;
     font-size: 18px;
+  }
+  .offerButton {
+    width: 710rpx;
+    height: 80rpx;
+    border-radius: 8rpx;
+    background: #f43d41;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    margin: 50rpx 20rpx 0 20rpx;
   }
 </style>
