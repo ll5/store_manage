@@ -128,8 +128,9 @@
   .categoryName{
     padding: 0 20rpx;
     line-height: 100rpx;
-    border-bottom: 1px solid #37B3FF;
-    background: #fff;
+    background: #ddd;
+    /*background: #c1eaff;*/
+    border-bottom: 1rpx solid #e5e5e5;
     margin-top: 20rpx;
   }
   .item{
@@ -158,17 +159,18 @@
   }
   .addButton {
     position: fixed;
-    bottom: 10vh;
+    bottom: 5vw;
     right: 5vw;
-    width: 100rpx;
-    height: 100rpx;
-    border-radius: 50%;
+    width: 75rpx;
+    height: 75rpx;
     background: #37B3FF;
-    color: #fff;
+    border-radius: 50%;
+    border: 1px solid #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 12px;
+    color: #fff;
   }
   .offerButton {
     width: 710rpx;
