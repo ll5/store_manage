@@ -15,6 +15,8 @@
       <div class="tabItem bdr" @click="generateOffer('agencyPrice')">生成代理价</div>
       <div class="tabItem" @click="generateOffer('sellPrice')">生成销售价</div>
     </div>
+    <!--画布-->
+    <canvas canvas-id="canvas" class="canvas" :style="{height: canvasHeight + 'px'}"></canvas>
   </div>
 </template>
 
@@ -26,6 +28,7 @@
   export default {
     data () {
       return {
+        canvasHeight: 300,
         categoryList: [], // 产品分类列表
         productList: []
       }
@@ -55,7 +58,23 @@
       },
       // 生成报价
       generateOffer (field) {
-        console.log(field)
+        const info = wx.getSystemInfoSync()
+
+        let w = info.screenWidth
+
+        let h = -20
+        // 获取总高度
+        this.productList.forEach(item => {
+          h += item.isSepatator ? 120 : 80
+        })
+
+        console.log(w, h)
+
+        this.canvasHeight = h
+        const context = wx.createCanvasContext('canvas')
+        context.rect(0, 0, w, h - 10)
+        context.fill()
+        context.draw()
       }
     },
     onLoad () {
@@ -106,6 +125,7 @@
     display: flex;
     align-items: center;
     border-bottom: 1px solid #e5e5e5;
+    box-sizing: border-box;
   }
   .bdr{
     border-right: 1rpx solid #e5e5e5;
@@ -116,5 +136,10 @@
   .itemPrice {
     width: 120rpx;
     font-size: 16px;
+  }
+  .canvas{
+    width: 100%;
+    height: 500rpx;
+    background: #689950;
   }
 </style>
