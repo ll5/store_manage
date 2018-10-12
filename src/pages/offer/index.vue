@@ -71,10 +71,29 @@
         console.log(w, h)
 
         this.canvasHeight = h
-        const context = wx.createCanvasContext('canvas')
-        context.rect(0, 0, w, h - 10)
-        context.fill()
-        context.draw()
+        const ctx = wx.createCanvasContext('canvas')
+        ctx.rect(0, 0, w, 50)
+        ctx.setFillStyle('#fee')
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.moveTo(0, 50)
+        ctx.lineTo(w, 50)
+        ctx.setStrokeStyle('red')
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.setFontSize(20)
+        ctx.setTextBaseline('middle')
+        ctx.fillText('Hello', 10, 75)
+
+        ctx.beginPath()
+        ctx.moveTo(0, 100)
+        ctx.lineTo(w, 100)
+        ctx.setStrokeStyle('red')
+        ctx.stroke()
+
+        ctx.draw()
       }
     },
     onLoad () {
