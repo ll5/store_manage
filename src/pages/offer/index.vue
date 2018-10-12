@@ -59,40 +59,44 @@
       // 生成报价
       generateOffer (field) {
         const info = wx.getSystemInfoSync()
-
         let w = info.screenWidth
+        const ctx = wx.createCanvasContext('canvas')
+        let h = -10
 
-        let h = -20
         // 获取总高度
-        this.productList.forEach(item => {
-          h += item.isSepatator ? 120 : 80
+        this.productList.forEach((item, index) => {
+          h += 50 // 累加每行的高度
+          if (item.isSepatator) {
+            ctx.beginPath()
+            ctx.rect(0, index * 50, w, 50)
+            ctx.setFillStyle('#fee')
+            ctx.fill()
+
+            ctx.beginPath()
+            ctx.setFontSize(20)
+            ctx.setTextBaseline('middle')
+            ctx.setFillStyle('#f00')
+            ctx.fillText(item.name, 10, index * 50 + 25)
+          } else {
+            ctx.beginPath()
+            ctx.setFontSize(20)
+            ctx.setTextBaseline('middle')
+            ctx.fillText(item.name, 10, index * 50 + 25)
+
+            ctx.beginPath()
+            ctx.setFontSize(20)
+            ctx.setTextBaseline('middle')
+            ctx.fillText(`${item[field]}/${item.unit}`, w * 0.7, index * 50 + 25)
+
+            ctx.beginPath()
+            ctx.moveTo(0, index * 50 + 50)
+            ctx.lineTo(w, index * 50 + 50)
+            ctx.setStrokeStyle('red')
+            ctx.stroke()
+          }
         })
 
-        console.log(w, h)
-
         this.canvasHeight = h
-        const ctx = wx.createCanvasContext('canvas')
-        ctx.rect(0, 0, w, 50)
-        ctx.setFillStyle('#fee')
-        ctx.fill()
-
-        ctx.beginPath()
-        ctx.moveTo(0, 50)
-        ctx.lineTo(w, 50)
-        ctx.setStrokeStyle('red')
-        ctx.stroke()
-
-        ctx.beginPath()
-        ctx.setFontSize(20)
-        ctx.setTextBaseline('middle')
-        ctx.fillText('Hello', 10, 75)
-
-        ctx.beginPath()
-        ctx.moveTo(0, 100)
-        ctx.lineTo(w, 100)
-        ctx.setStrokeStyle('red')
-        ctx.stroke()
-
         ctx.draw()
       }
     },
