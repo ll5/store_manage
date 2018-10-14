@@ -30,6 +30,10 @@
       }
     },
     onLoad () {
+      // 指定默认排序值
+      if (!this.category.order) {
+        this.category.order = 1
+      }
     },
     methods: {
       // 关闭对话框

@@ -63,6 +63,10 @@
         let currentCategory = this.categorys.find(item => item._id === this.product.categoryId)
         this.categoryName = currentCategory.name
       }
+      // 指定默认排序值
+      if (!this.product.order) {
+        this.product.order = 1
+      }
     },
     methods: {
       // 关闭对话框
