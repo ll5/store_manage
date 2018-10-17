@@ -17,6 +17,9 @@
         库存：<input class="text" v-model="product.store" />
       </div>
       <div class="textWrap">
+        库存预警：<input class="text" v-model="product.storeWarn" />
+      </div>
+      <div class="textWrap">
         单位：<input class="text" v-model="product.unit" />
       </div>
       <div class="textWrap">
@@ -67,6 +70,10 @@
       if (!this.product.order) {
         this.product.order = 1
       }
+      // 指定默认库存预警
+      if (!this.product.storeWarn) {
+        this.product.storeWarn = 10
+      }
     },
     methods: {
       // 关闭对话框
@@ -87,6 +94,7 @@
             name: this.product.name,
             order: +this.product.order,
             store: +this.product.store,
+            storeWarn: +this.product.storeWarn,
             unit: this.product.unit,
             buyingPrice: +this.product.buyingPrice,
             sellPrice: +this.product.sellPrice,
@@ -109,6 +117,7 @@
             name: this.product.name,
             order: +this.product.order,
             store: +this.product.store,
+            storeWarn: +this.product.storeWarn,
             unit: this.product.unit,
             buyingPrice: +this.product.buyingPrice,
             sellPrice: +this.product.sellPrice,
@@ -118,7 +127,6 @@
             categoryName: this.product.categoryName
           }
         }).then(() => {
-          // console.log('success')
           wx.showToast({title: '新增成功！'})
           this.$emit('close', true)
         })
@@ -148,7 +156,7 @@
     margin-top: 5vh;
   }
   .text {
-    width: 450rpx;
+    width: 440rpx;
     height: 80rpx;
     /*border: 1px solid #37B3FF;*/
     border: 1px solid #e5e5e5;
@@ -157,7 +165,7 @@
   }
   .textWrap {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin: 20rpx 0;
   }

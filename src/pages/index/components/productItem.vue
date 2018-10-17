@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="wrap" :class="{warn: product.store < product.storeWarn}">
     <div class="name">{{product.name}}</div>
     <div class="store">{{product.store}}<span class="unit">{{product.unit}}</span></div>
     <div class="button" @click="distroyStore(product._id)">售出</div>
@@ -47,6 +47,9 @@
     display: flex;
     align-items: center;
     padding: 0 20rpx;
+  }
+  .warn{
+    background: #fdd;
   }
   .name {
     width: 450rpx;

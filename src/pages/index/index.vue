@@ -58,10 +58,18 @@
         product.limit(9999).where({categoryId: this.currentCategoryId}).get().then(res => {
           this.productList = res.data
         })
+      },
+      // 获取库存预警的商品数量
+      getStoreWarnNum () {
+        const _ = db.command
+        product.where({store: _.lt(_.storeWarn)}).count().then(res => {
+          console.log('库存预警', res)
+        })
       }
     },
-    onLoad () {
+    onShow () {
       this.getCategoryList()
+      this.getStoreWarnNum()
     }
   }
 </script>
