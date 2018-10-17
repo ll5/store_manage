@@ -128,9 +128,9 @@
   .categoryName{
     padding: 0 20rpx;
     line-height: 100rpx;
-    background: #ddd;
+    background: #fff;
     /*background: #c1eaff;*/
-    border-bottom: 1rpx solid #e5e5e5;
+    border-bottom: 1rpx solid #37B3FF;
     margin-top: 20rpx;
   }
   .item{

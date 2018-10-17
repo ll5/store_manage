@@ -48,9 +48,6 @@
     align-items: center;
     padding: 0 20rpx;
   }
-  .warn{
-    background: #fdd;
-  }
   .name {
     width: 450rpx;
   }
@@ -74,5 +71,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+
+  .warn{
+    background: rgb(255,253,253);
+    /*border-bottom: 1px solid #f00;*/
+  }
+  .warn .name {
+    color: #f00!important;
+  }
+  .warn .store {
+    color: #f00!important;
+  }
+  .warn .unit {
+    color: #f00!important;
+  }
+  .warn .button {
+    border: 1px solid #f00;
+    color:#f00;
   }
 </style>

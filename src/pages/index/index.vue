@@ -1,6 +1,7 @@
 <template>
   <div class="wrap">
-    <div v-for="item in productList" :key="item._id">
+    <div class="warn" v-if="storeWarnNum">有{{storeWarnNum}}种商品库存不足！</div>
+    <div v-for="item in currentList" :key="item._id">
       <productItem :product="item" />
     </div>
     <!--底部 tab 栏-->
@@ -29,9 +30,11 @@
     components: {productItem},
     data () {
       return {
+        storeWarnNum: 0, // 库存不足的商品数量
         currentCategoryId: '',
         categoryList: [],
-        productList: []
+        productList: [],
+        currentList: []
       }
     },
     methods: {
@@ -40,36 +43,37 @@
         wx.navigateTo({url: '/pages/manage/main'})
       },
       switchTab (id) {
+        this.currentList = []
         if (this.currentCategoryId === id) return
-        this.productList = []
         this.currentCategoryId = id
-        this.getProductList()
+        this.$nextTick(() => {
+          // this.currentList = this.productList.filter(i => i.categoryId === id).sort((a, b) => a.order > b.order)
+          this.currentList = this.productList.filter(i => i.categoryId === id)
+        })
       },
       // 获取分类列表
       getCategoryList () {
         category.limit(9999).get().then(res => {
           this.categoryList = res.data
-          this.currentCategoryId = res.data[0]._id
-          this.getProductList()
+          this.switchTab(res.data[0]._id)
         })
       },
       // 获取产品列表
       getProductList () {
-        product.limit(9999).where({categoryId: this.currentCategoryId}).get().then(res => {
+        product.limit(9999).orderBy('order', 'desc').get().then(res => {
+          let warnNum = 0
+          res.data.forEach(item => {
+            item.store < item.storeWarn && warnNum++
+          })
+          // console.log(res.data)
+          this.storeWarnNum = warnNum
           this.productList = res.data
-        })
-      },
-      // 获取库存预警的商品数量
-      getStoreWarnNum () {
-        const _ = db.command
-        product.where({store: _.lt(_.storeWarn)}).count().then(res => {
-          console.log('库存预警', res)
+          this.getCategoryList()
         })
       }
     },
     onShow () {
-      this.getCategoryList()
-      this.getStoreWarnNum()
+      this.getProductList()
     }
   }
 </script>
@@ -79,6 +83,15 @@
     height: calc(100vh - 100rpx);
     background: #f5f5f5;
     overflow-y: scroll;
+  }
+  .warn {
+    width: 100%;
+    height: 50rpx;
+    background: #f00;
+    color: #fff;
+    line-height: 50rpx;
+    text-align: center;
+    font-size: 30rpx;
   }
 
   .tab {
